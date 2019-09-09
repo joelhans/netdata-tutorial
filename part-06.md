@@ -70,7 +70,7 @@ This is achieved through plugin orchestrators.
 
 By default, `python.d.plugin`, a Netdata external plugin is an orchestrator for data collection modules written in Python.
 
-Netdata is migrating all data collection modules from Python to Go, so to use the `go.d.plugin` orchestrator for `go` modules, you need to disable the default `python` and enable `go`. You can't have both orchestrators running data collection modules, this will result in unexpected behaviours.
+<!-- Netdata is migrating all data collection modules from Python to Go, so to use the `go.d.plugin` orchestrator for `go` modules, you need to disable the default `python` and enable `go`. You can't have both orchestrators running data collection modules, this will result in unexpected behaviours. -->
 
 ### Using the default `python.d.plugin`
 
