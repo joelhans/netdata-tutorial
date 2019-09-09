@@ -142,4 +142,10 @@ RemoteNginx:
 
 This same procedure works when you want to view metrics of other services like Apache, Redis, Memcached and other services supported by the [`python.d` orchestrator](https://github.com/netdata/netdata/tree/master/collectors/python.d.plugin).
 
+After making changes to the respective configuration file, always restart `netdata.service`.
+
+### Using `go.d.plugin`
+
+As mentioned earlier, you have to disable the default `python.d` plugin orchestrator before you can activate the `go.d` plugin orchestrator.
+
 ## Edit the per-plugin configuration
