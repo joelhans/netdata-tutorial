@@ -30,6 +30,13 @@ A good example is `fping.plugin`, written in C which measures network latency, j
 
 A major difference between these two types of plugins is that external plugins depends on plugins.d - the Netdata internal plugin that collects metrics from external processes.
 
+## Auto-detection
+
+Auto-detection is one of the built-in features that allows Netdata detect and collect metrics of new or available services with zero configurations.
+
+For Netdata to collect metrics from a service after it is already installed, you have to ensure you meet the requirements of the specific service.
+After which you restart the `netdata.service`.
+
 ## Enable or disable internal plugins
 
 You can enable or disable plugins in the [plugin] section of `netdata.conf`.
@@ -146,6 +153,53 @@ After making changes to the respective configuration file, always restart `netda
 
 ### Using `go.d.plugin`
 
-As mentioned earlier, you have to disable the default `python.d` plugin orchestrator before you can activate the `go.d` plugin orchestrator.
+Netdata is in process of migrating collectors from `python` to `go`.
 
-## Edit the per-plugin configuration
+The configuration at the moment are incompatible. As a temporary solution, all modules rewritten in go are disabled by default.
+
+Previously you enabled Nginx metrics on your Netdata dashboard through the `python.d.plugin` orchestrator, to achieve this with the `go.d.plugin` alternative, you have to do the following:
+
+- Explicitly disable python module in `python.d.conf`
+  run this command:
+
+```sh
+/etc/netdata/edit-config python.d.conf
+```
+
+Find the module of the service, Nginx is used as an example in this tutorial.
+
+You will see it commented and activated by default:
+
+```yaml
+# nginx: yes
+```
+
+Uncomment and disable it:
+
+```yaml
+nginx: no
+```
+
+- explicitly enable go module in `go.d.conf`
+
+run this command:
+
+```sh
+/etc/netdata/edit-config go.d.conf
+```
+
+You will see the module of the service, Nginx, for this tutorial, commented and activated by default.
+
+```yaml
+# nginx: yes
+```
+
+Uncomment that line so it looks like this:
+
+```yaml
+nginx: yes
+```
+
+- move `python` module jobs to `go` module configuration file (change syntax, see go module configuration file for details).
+
+* restart `netdata.service`
