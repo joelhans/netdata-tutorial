@@ -78,7 +78,7 @@ For this section of the tutorial, you will learn how to add the Nginx module wri
 
 As with some services, this module has to meet some requirements.
 
-- Nginx has to be configured with ‘ngx_http_stub_status_module’.
+- Nginx has to be configured with `ngx_http_stub_status_module`.
 
   You can confirm if the module is already enabled or not by using following command:
 
@@ -94,6 +94,52 @@ As with some services, this module has to meet some requirements.
   }
   ```
 
-With the above requirements met, you can proceed.
+Netdata autodetects that the module is active, you can see the metrics on your dashboard.
+
+You can proceed to monitor as many services as you want by editing their service configuration file.
+
+```sh
+/etc/netdata/edit-config python.d/[service].conf
+```
+
+You can see the available modules for different services at the [official Netdata repository](https://github.com/netdata/netdata/tree/master/collectors/python.d.plugin).
+
+To configure Netdata to monitor as many Nginx servers, you will edit the Nginx configuration file with the following command:
+
+```sh
+/etc/netdata/edit-config python.d/nginx.conf
+```
+
+Be sure to have the `ngx_http_stub_status_module` active on any servers you want to monitor.
+
+You can proceed to monitor as many Nginx servers as you need by editing the `python.d/nginx.conf` file:
+
+At the near bottom of the file you will see the below uncommented:
+
+```yaml
+localhost:
+  name: "local"
+  url: "http://localhost/stub_status"
+
+localipv4:
+  name: "local"
+  url: "http://127.0.0.1/stub_status"
+
+localipv6:
+  name: "local"
+  url: "http://[::1]/stub_status"
+```
+
+You can add more
+
+```yaml
+RemoteNginx:
+  name: "Reverse_Proxy"
+  url: "http://yourdomain.com/stub_status"
+```
+
+`RemoteNginx` will show up in Netdata logs. `Reverse Proxy` will show up in the menu in the nginx section.
+
+This same procedure works when you want to view metrics of other services like Apache, Redis, Memcached and other services supported by the [`python.d` orchestrator](https://github.com/netdata/netdata/tree/master/collectors/python.d.plugin).
 
 ## Edit the per-plugin configuration
