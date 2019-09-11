@@ -1,4 +1,12 @@
-# 06. Metrics collectors in Netdata
+# 06. Collecting metrics from your applications or services
+
+Auto-detection is one of the built-in features that allow Netdata to detect and collect metrics of new or available services with zero configurations.
+
+For Netdata to collect metrics from any service after it is already installed, you have to ensure you meet the requirements of the specific service.
+
+After which you restart the `netdata.service`.
+
+
 
 Netdata collects system metrics by itself. It has many internal plugins for collecting most of the metrics presented by default when it starts, collecting data from `/proc`, `/sys` and other Linux kernel sources.
 
@@ -32,10 +40,7 @@ A significant difference between these two types of plugins is that external plu
 
 ## Auto-detection
 
-Auto-detection is one of the built-in features that allow Netdata to detect and collect metrics of new or available services with zero configurations.
 
-For Netdata to collect metrics from any service after it is already installed, you have to ensure you meet the requirements of the specific service.
-After which you restart the `netdata.service`.
 
 ## Enable or disable internal plugins
 
