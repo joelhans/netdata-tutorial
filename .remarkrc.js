@@ -47,6 +47,6 @@ exports.plugins = [
   [require("remark-lint-unordered-list-marker-style"), "-"],
   [require("remark-lint-ordered-list-marker-style"), "."],
   [require("remark-lint-ordered-list-marker-value"), "ordered"],
-  require("remark-validate-links"),
+  require("remark-validate-links", false),
   require("remark-frontmatter")
 ];
