@@ -112,7 +112,7 @@ mongotop --uri "mongodb://<hostname>/your_database_name"
 
 Another backend option other than the use of MongoDB is Prometheus remote write API.
 
-To use this option with [storage providers](https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage), [protobuf](https://developers.google.com/protocol-buffers/) and [snappy](https://github.com/google/snappy), the libraries should be installed first. Next, Netdata should be re-installed from the source. The installer will detect that the required libraries and utilities are now available.
+To use this option with [storage providers](https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage), [protobuf](https://developers.google.com/protocol-buffers/) and [snappy](https://github.com/google/snappy), install the libraries first. Next, Netdata should be re-installed from the source. The installer will detect that the required libraries and utilities are now available.
 
 In the `[backend]` section of `netdata.conf` enable and add configuration for the remote write API:
 
