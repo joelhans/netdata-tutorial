@@ -53,13 +53,13 @@ To confirm it is working, go to your Netdata dashboard, on your right, click **N
 
 Netdata supports the use of backends for archiving the metrics.
 
-The supported backends include Graphite, Opentsdb, Prometheus, AWS Kinesis Data Streams and MongoDB.
+The supported backends include Graphite, Opentsdb, Prometheus, AWS Kinesis Data Streams, and MongoDB.
 
 Since Netdata collects thousands of metrics per server per second, which would easily congest any backend server when several Netdata servers are sending data to it, Netdata allows sending metrics at a lower frequency, by resampling them.
 
 So, although Netdata collects metrics every second, it can send to the backend servers averages or sums every X seconds (though, it can send them per second if you need it to).
 
-It is assumed that you already installed MongoDB and it is running without issues. With that out of the way, you can proceed to install [`libmongoc` 1.7.0 or higher](http://mongoc.org/libmongoc/current/installing.html).
+With MongoDB installed and running, you can proceed to install a requirement for the backend, [`libmongoc` 1.7.0 or higher](http://mongoc.org/libmongoc/current/installing.html).
 
 Next, Netdata should be re-installed from the source. The installer will detect that the required libraries are now available.
 
