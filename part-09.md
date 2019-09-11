@@ -1,9 +1,10 @@
 # 09. Long-term metrics storage
 
-Netdata stores metrics in your system’s RAM using a ridiculously efficient database. It only saves or loads historical metrics from disk when you restart it.
+Netdata by default stores metrics for a certain amount of time, using a ridiculously efficient round-robin database.
 This enables Netdata to be both low-resource and exhaustive in its collection of real-time metrics.
+However, if you want to store even more metrics for a longer period, you can make use of the database engine and or a backend of choice.
 
-This guide will show you other ways Netdata can store metrics.
+This guide will show you how to store long term historical metrics in Netdata using the database engine and/or backend.
 
 ## What you'll learn in this part
 
@@ -11,19 +12,21 @@ In this part of the Netdata guide, you'll learn how to:
 
 - Enable the database engine
 - Use the MongoDB backend
-- Use the Prometheus backend (mostly a link to this guide)
+- Use the Prometheus backend
 
 Let's get started!
 
 ## Enable the database engine
 
-The v1.15.0 release of Netdata came bundled with a new and powerful Database Engine. It gives you the option to store compressed metrics data for more extended periods than the RAM-only database option can offer.
+New releases of Netdata come bundled with a new and powerful database engine which gives you the option to store compressed metrics data for more extended periods than the round-robin database option can offer.
 
-It works like a traditional database by using a certain amount of RAM for data caching and indexing, while then sending the rest of the data to disk in a compressed format. Because the DB engine sends historical metrics data to disk, it can help you store a much larger dataset than the amount of RAM your system has.
+It works like a traditional database by using a certain amount of RAM for data caching and indexing, while then sending the rest of the data to disk in a compressed format.
+Because the database engine sends historical metrics data to disk, it can help you store a much larger dataset than the amount of RAM your system has.
 
-Your default netdata.conf file looks like this:
+Your default `netdata.conf` file looks like this:
 
-```yaml
+```conf
+[global]
 # memory mode = save
 # page cache size = 32
 # dbengine disk space = 256
@@ -31,23 +34,22 @@ Your default netdata.conf file looks like this:
 
 You uncomment by removing the `#` and setting `memory mode` from `save` to `dbengine`, also remove the `#` from `page cache size` and `dbengine disk space` lines.
 
-```yaml
+```conf
+[global]
 memory mode = dbengine
 page cache size = 32
 dbengine disk space = 256
 ```
 
-The above values you can see in the configuration file are the default
-and minimum values for Page Cache size and DB engine disk space quota.
-Both numbers are in MiB.
-
 The `page cache size` option determines the amount of RAM in MiB that is dedicated to caching Netdata metric values themselves.
 
 The `dbengine disk space` option determines the amount of disk space in MiB that is dedicated to storing Netdata metric values and all related metadata describing them.
 
-After uncommenting the lines, restart the `netdata` service.
+After uncommenting the lines, [restart](https://docs.netdata.cloud/docs/gettingstarted/#starting-and-stopping-netdata) the `netdata` service.
 
-To confirm it is working, go to your Netdata dashboard, on your right, click **Netdata Monitoring**. You can find `dbengine` metrics after `queries`.
+To confirm the database engine is working, go to your Netdata dashboard and click on the **Netdata Monitoring** menu on the right-hand side. You can find `dbengine` metrics after `queries`.
+
+**[img](Add image)**
 
 ## Use the MongoDB backend
 
@@ -63,9 +65,11 @@ With MongoDB installed and running, you can proceed to install a requirement for
 
 Next, Netdata should be re-installed from the source. The installer will detect that the required libraries are now available.
 
-To enable data sending to the MongoDB backend set the default options in the `backend` section of `netdata.conf` from:
+To enable archiving to the MongoDB backend set the default options in the `backend` section of `netdata.conf`.
 
-```yaml
+It looks like this:
+
+```conf
 [backend]
 # host tags =
 # enabled = no
@@ -73,15 +77,15 @@ To enable data sending to the MongoDB backend set the default options in the `ba
 # type = graphite
 ```
 
-To:
+Uncomment `enabled` and `type`, update them to the following:
 
-```yaml
+```conf
 [backend]
 enabled = yes
 type = mongodb
 ```
 
-In the Netdata directory, configure [MongoDB URI](https://docs.mongodb.com/manual/reference/connection-string/), database name and collection name by running :
+In the Netdata directory, configure the [MongoDB URI](https://docs.mongodb.com/manual/reference/connection-string/), database name, and collection name by running:
 
 ```sh
 ./edit-config mongodb.conf
@@ -100,9 +104,9 @@ database = your_database_name
 collection = your_collection_name
 ```
 
-Restart your `netdata` service.
+[Restart](https://docs.netdata.cloud/docs/gettingstarted/#starting-and-stopping-netdata) Netdata.
 
-You confirm MongoDB is saving your metrics using [mongotop](https://docs.mongodb.com/manual/reference/program/mongotop/#bin.mongotop), run the following command:
+You can confirm MongoDB is saving your metrics using [mongotop](https://docs.mongodb.com/manual/reference/program/mongotop/#bin.mongotop). Run the following command:
 
 ```sh
 mongotop --uri "mongodb://<hostname>/your_database_name"
@@ -110,20 +114,20 @@ mongotop --uri "mongodb://<hostname>/your_database_name"
 
 ## Use the Prometheus remote write backend
 
-Another backend option other than the use of MongoDB is Prometheus remote write API.
+If you don't want to use the MongoDB backend, you can try the Prometheus remote write API.
 
 To use this option with [storage providers](https://prometheus.io/docs/operating/integrations/#remote-endpoints-and-storage), [protobuf](https://developers.google.com/protocol-buffers/) and [snappy](https://github.com/google/snappy), install the libraries first. Next, Netdata should be re-installed from the source. The installer will detect that the required libraries and utilities are now available.
 
 In the `[backend]` section of `netdata.conf` enable and add configuration for the remote write API:
 
-```yaml
+```conf
 [backend]
     enabled = yes
     type = prometheus_remote_write
     remote write URL path = /receive
 ```
 
-Restart the `netdata` service.
+[Restart](https://docs.netdata.cloud/docs/gettingstarted/#starting-and-stopping-netdata) Netdata. It will now be archiving historical metrics to your Prometheus backend!
 
 You can check out the following great resources on how to use Netdata and Prometheus:
 
