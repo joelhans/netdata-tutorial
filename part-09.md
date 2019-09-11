@@ -53,7 +53,7 @@ To confirm it is working, go to your Netdata dashboard, on your right, click **N
 
 Netdata supports the use of backends for archiving the metrics.
 
-The supported backends include graphite, opentsdb, prometheus, AWS Kinesis Data Streams and MongoDB.
+The supported backends include Graphite, Opentsdb, Prometheus, AWS Kinesis Data Streams and MongoDB.
 
 Since Netdata collects thousands of metrics per server per second, which would easily congest any backend server when several Netdata servers are sending data to it, Netdata allows sending metrics at a lower frequency, by resampling them.
 
