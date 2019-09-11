@@ -1,4 +1,11 @@
 {
+  "name": "Netdata Tutorials",
+  "version": "1.0.0",
+  "description": "Tutorials for Netdata users",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joelhans/netdata-tutorial"
+  },
   "devDependencies": {
     "mkdirp": "^0.5.1",
     "remark-cli": "^7.0.0",
