@@ -1,0 +1,95 @@
+# Monitor more than one system with Netdata
+
+By design, Netdata is a _distributed_ application. It runs on, and monitors, only a single system. That means you can
+install many Netdata agents on all your servers, containers, and edge/IoT devices.
+
+We made this decision a long time ago to [improve security and performance](/tutorials/part-01/).
+
+To use Netdata to monitor more than a single system, install it on each one. Each Netdata agent runs independently and,
+by default, doesn't send its metrics from one system to another.
+
+> We'll cover _streaming_, which allows you to send metrics from one system to another, in the last part of this >
+tutorial.
+
+At this point, you might be thinking, "So, now I have to remember all these IP addresess, and type them into my browser
+manually, just to move from one system to another? Maybe I should just make a bunch of bookmarks. What's a few more tabs
+on top of the hundred I have already? 🤬"
+
+The good news is that none of this is necessary. Netdata is _distributed_, but is also built to help you move seamlessly
+between any number of Netdata agents, and the systems they monitor. This is possible thanks to [Netdata
+Cloud](../netdata-cloud/README.md).
+
+## What you'll learn in this part
+
+In this part of the Netdata guide, we'll talk about why you should use Netdata Cloud, and then you'll learn how to:
+
+-   Add nodes to your Netdata Cloud account -   Navigate between your nodes via the **My nodes** menu -   Use the
+essential features in the Nodes View
+
+## Why use Netdata Cloud?
+
+We built Netdata Cloud to give users a way to bridge the gap between many distributed agents running concurrently, all
+without creating a centralized database for all your systems' metrics.
+
+> Read more: [_Introducing Netdata Cloud: our vision for distributed health and performance >
+monitoring_](https://blog.netdata.cloud/posts/netdata-cloud-announcement/).
+
+Netdata Cloud gives you a better way to observe and take action on slowdowns, anomalies, or outages in your systems and
+applications. It connects all your Netdata agents through your _web browser_, allowing you to move between different
+nodes quickly and use the Nodes View to see a handful or hundreds of Netdata-monitored nodes on a single screen.
+
+So, if you have more than one system that's being monitored by Netdata, and you aren't at a workplace with strict data
+requirements, Netdata Cloud will deliver you all the benefits of a centralized monitoring infrastructure while
+maintaining the benefits of its distributed nature.
+
+It's the best of both worlds!
+
+And, better yet, Netdata Cloud doesn't store any of your system's metrics. It stores _metadata_ about the system's IP,
+hostname, and a randomly-created GUID, and nothing else. Metrics are streamed from your systems directly to your _web
+browser_.
+
+Essentially, your web browser hosts a SaaS application with all of Netdata Cloud's features embedded right into the
+dashboard itself.
+
+## Add nodes to your Netdata Cloud account
+
+The best way to add nodes to your Netdata Cloud account is to click on the **Sign in** button on the top-right corner of
+your Netdata dashboard.
+
+That button will open a new tab in for Netdata Cloud, and will prompt you to log-in using email or authentication via
+Google or GitHub. Choose your preferred method.
+
+If you chose email, Netdata Cloud will send you a "magic link" via email. Once you click on the link, that node will be
+connected to your Netdata Cloud account and you'll be redirected back to your dashboard.
+
+If you chose Google or GitHub, you'll be redirected back to your dashboard as soon as authentication is finished.
+
+Here's what authentication via Google looks like:
+
+![Animated GIF of signing in to Netdata Cloud via
+Google](https://user-images.githubusercontent.com/1153921/64826651-35fad900-d576-11e9-82ea-a072fae46fb0.jpg)
+
+Depending on your authentication method, your email address or name will appear in the top right of your dashboard
+instead of the **Sign in** button.
+
+At this point, you've successfully added a single Netdata agent to your Netdata Cloud account. _What about the rest?_
+
+
+
+![Animated GIF of registering another
+](https://user-images.githubusercontent.com/1153921/64826651-35fad900-d576-11e9-82ea-a072fae46fb0.jpg)
+
+## Navigate between your nodes via the My nodes menu
+
+To show all your servers in that menu, you need to [register for or sign in](netdata-cloud/signing-in.md) to [Netdata
+Cloud](netdata-cloud/) from each system. Each system will then appear in the **My nodes** menu, which you can use to
+navigate between your systems quickly.
+
+![Animated GIF of the My Nodes menu in
+action](https://user-images.githubusercontent.com/1153921/64389938-9aa7b800-cff9-11e9-9653-a77e791811ad.gif)
+
+Whenever you pan, zoom, highlight, select, or pause a chart, Netdata will synchronize those settings with any other
+agent you visit via the My nodes menu. Even your scroll position is synchronized, so you'll see the same charts and
+respective data for easy comparisons or root cause analysis.
+
+You can now seamlessly track performance anomalies across your entire infrastructure!
