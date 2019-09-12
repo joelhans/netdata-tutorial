@@ -65,19 +65,7 @@ With MongoDB installed and running, you can proceed to install a requirement for
 
 Next, Netdata should be re-installed from the source. The installer will detect that the required libraries are now available.
 
-To enable archiving to the MongoDB backend set the default options in the `backend` section of `netdata.conf`.
-
-It looks like this:
-
-```conf
-[backend]
-# host tags =
-# enabled = no
-# data source = average
-# type = graphite
-```
-
-Uncomment `enabled` and `type`, update them to the following:
+To enable archiving to the MongoDB backend, set the options in the `backend` section of `netdata.conf` to the following:
 
 ```conf
 [backend]
