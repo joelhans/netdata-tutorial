@@ -4,7 +4,7 @@ Netdata by default stores metrics for a certain amount of time, using a ridiculo
 This enables Netdata to be both low-resource and exhaustive in its collection of real-time metrics.
 However, if you want to store even more metrics for a longer period, you can make use of the database engine and/or a backend of choice.
 
-This guide will show you how to store long term historical metrics in Netdata using the database engine and/or backend.
+This guide will show you how to store long-term historical metrics in Netdata using the database engine and/or backend.
 
 ## What you'll learn in this part
 
