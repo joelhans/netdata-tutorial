@@ -49,7 +49,7 @@ After uncommenting the lines, [restart](https://docs.netdata.cloud/docs/gettings
 
 To confirm the database engine is working, go to your Netdata dashboard and click on the **Netdata Monitoring** menu on the right-hand side. You can find `dbengine` metrics after `queries`.
 
-**[img](Add image)**
+<img width="1657" alt="database engine" src="https://user-images.githubusercontent.com/12263278/64781383-9c71fe00-d55a-11e9-962b-efd5558efbae.png">
 
 ## Use the MongoDB backend
 
