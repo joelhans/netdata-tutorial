@@ -19,6 +19,10 @@ The good news is that none of this is necessary. Netdata is _distributed_, but i
 between any number of Netdata agents, and the systems they monitor. This is possible thanks to [Netdata
 Cloud](../netdata-cloud/README.md).
 
+And even if you don't have multiple systems right now, keep reading—you'll learn how to test out these features with
+Netdata demo servers. That way, you'll be able to experience one of Netdata's best features now, so that you're ready to
+implement it once you inevitably get another system you want to monitor.
+
 ## What you'll learn in this part
 
 In this part of the Netdata guide, we'll talk about why you should use Netdata Cloud, and then you'll learn how to:
@@ -58,12 +62,10 @@ The best way to add nodes to your Netdata Cloud account is to click on the **Sig
 your Netdata dashboard.
 
 That button will open a new tab in for Netdata Cloud, and will prompt you to log-in using email or authentication via
-Google or GitHub. Choose your preferred method.
+Google or GitHub.
 
 If you chose email, Netdata Cloud will send you a "magic link" via email. Once you click on the link, that node will be
-connected to your Netdata Cloud account and you'll be redirected back to your dashboard.
-
-If you chose Google or GitHub, you'll be redirected back to your dashboard as soon as authentication is finished.
+connected to your Netdata Cloud account and you'll be redirected back to your dashboard. If you chose Google or GitHub, you'll be redirected back to your dashboard as soon as authentication is finished.
 
 Here's what authentication via Google looks like:
 
@@ -75,15 +77,23 @@ instead of the **Sign in** button.
 
 At this point, you've successfully added a single Netdata agent to your Netdata Cloud account. _What about the rest?_
 
-Well, you'll 
+Well, all you have to do is visit another node and repeat the sign-in process.
 
 ![Animated GIF of registering another
 ](https://user-images.githubusercontent.com/1153921/64826651-35fad900-d576-11e9-82ea-a072fae46fb0.jpg)
 
+### Example: Use a Netdata demo server 
+
+If you don't have multiple systems to associate with your Netdata Cloud account, you can test all these features out
+using a demo system.
+
+Visit the [Netdata website](https://www.netdata.cloud/#live-demo) and click on any of the gauge charts displayed beneath **Live Demo**.
+
+Once the dashboard loads, repeat the Netdata Cloud sign-in process. The demo server is now associated with your Netdata Cloud account, and will appear in your **My nodes** menu.
+
 ## Navigate between your nodes via the My nodes menu
 
-To show all your servers in that menu, you need to [register for or sign in](netdata-cloud/signing-in.md) to [Netdata
-Cloud](netdata-cloud/) from each system. Each system will then appear in the **My nodes** menu, which you can use to
+Once you have multiple nodes added to Netdata Cloud, they will populate your **My nodes** menu. You can use this menu to
 navigate between your systems quickly.
 
 ![Animated GIF of the My Nodes menu in
@@ -94,3 +104,5 @@ agent you visit via the My nodes menu. Even your scroll position is synchronized
 respective data for easy comparisons or root cause analysis.
 
 You can now seamlessly track performance anomalies across your entire infrastructure!
+
+## 
