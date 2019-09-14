@@ -1,0 +1,127 @@
+# Netdata’s dashboard in depth
+
+Welcome to the seventh part of the Netdata guide!
+
+This guide assumes your dashboard is running and you are familiar with it. 
+
+This part of the guide aims to get you more familiar with features of the dashboard 
+not previously mentioned in earlier parts of the guide.
+
+## What you'll learn in this part
+
+In this part of the Netdata guide, you'll learn how to:
+
+-   Change the dashboard's settings
+-   Check if there’s an update to Netdata
+-   Export or import a snapshot
+
+Let's get started!
+
+## Change the dashboard’s settings
+
+The settings tab at the top of your Netdata dashboard houses browser settings. 
+These settings have no effect on the operation of your Netdata server / daemon. 
+They take effect immediately and are permanently saved to browser 
+local storage (except the refresh on focus / always option).
+
+You can see the Performance, Synchronization, Visual and Locale tabs on the dashboard settings modal. 
+
+### Performance
+
+This tab is a collection of options focused on the performance of the
+ web browser by tweaking the default dashboard behaviour. 
+
+You can set when to refresh the charts, which dimensions to show and how you to handle hidden charts, and page scroll.
+
+### Synchronization
+
+This tab is a collection of options focused on the how your metrics and charts synchronize. 
+
+You can choose **parallel** or **sequential** chart refresh policy to use. 
+Selecting **parallel** allows you options as to how you prefer re-sync chart refreshes.
+
+You can also choose to sync or not sync hover selection on all chart, pan and zoom on all charts.
+
+### Visual
+
+This tab focuses on the visuals of your dashboard.
+
+You can switch between the default dark theme and white. 
+This action and switching the **Help Me** button triggers a reload of the dashboard.
+
+You can also enable data padding and Bézier lines on charts.
+
+### Locale
+
+This tab houses options to scale and select units for time and temperature.
+
+You can also choose either to use browser local time or server time. 
+
+However, note that these settings are applied gradually as charts are updated. 
+To force them, refresh the dashboard now. 
+
+![dash-settings](https://user-images.githubusercontent.com/12263278/64901553-967f3880-d692-11e9-95ac-dd485d36535c.gif)
+
+## Check if there’s an update to Netdata
+
+Netdata upon installation with [the one-liner](https://docs.netdata.cloud/packaging/installer/#one-line-installation) 
+comes with the auto-update option enabled by default.
+
+You can always check if there is an update available right from the Update tab of your Netdata dashboard.
+
+![nedata-update](https://user-images.githubusercontent.com/12263278/64876743-be957a00-d647-11e9-83dd-2f0a8df572cb.gif)
+
+You can see an update is available from the above short screen record.
+
+Netdata automatically updates itself but if you choose to update it manually 
+there are [several well documented methods]() to achieve that, 
+however it is recommended that you first go over the [changelog](https://docs.netdata.cloud/changelog/).
+
+## Export or import a snapshot
+
+Snapshot files include all the information of the dashboard, including the URL of the origin server, 
+its netdata unique ID, and chart data queries for the visible timeframe,
+so align, pan and zoom the charts as needed. 
+Snapshots are not in real time. 
+
+Netdata can export and import dashboard snapshots. Any Netdata can import the snapshot of any other Netdata. 
+
+The snapshot will be downloaded as a file, to your computer, that can be imported back into any netdata dashboard, 
+you do not need to import it back to the current server.
+
+Snapshots are not uploaded to a server rather they are handled by your web browser on your computer.
+
+They are temporary because on the reload of your browser, the snapshot is being replaced by the actual 
+and live Netdata dashboard.
+
+### To export or save a snapshot
+
+ Click on the top upload icon as seen on the short clip below, edit the snapshot file name and 
+ finally select your desired compression method and click `Export`.
+
+ ![export-shot](https://user-images.githubusercontent.com/12263278/64901454-48b60080-d691-11e9-9c14-1539bc841735.gif)
+
+ You save the snapshot file after it has been generated on your browser and like a regular file attachment, 
+ you can email the it to your colleague.
+
+ Congratulations, you have successfully exported a snapshot.
+
+ #### To import or load a snapshot
+
+ Click on the top download icon as seen on the short clip below. 
+
+![import-shot](https://user-images.githubusercontent.com/12263278/64901503-ee696f80-d691-11e9-9678-8d0e2a162402.gif)
+
+ Select the Netdata snapshot file to import. 
+
+ Once the file is loaded, click `import` to render it.
+
+ ## Up Next
+
+In this part of the Netdata tutorial, you learned how to:
+
+-   Change the dashboard's settings
+-   Check if there’s an update to Netdata
+-   Export or import a snapshot
+
+Next, you'll learn how to **Build your first custom dashboard!**.
