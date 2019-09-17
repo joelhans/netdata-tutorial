@@ -70,7 +70,7 @@ connected to your Netdata Cloud account and you'll be redirected back to your da
 Here's what authentication via Google looks like:
 
 ![Animated GIF of signing in to Netdata Cloud via
-Google](https://user-images.githubusercontent.com/1153921/64826651-35fad900-d576-11e9-82ea-a072fae46fb0.jpg)
+Google](https://user-images.githubusercontent.com/1153921/65063750-bb460b00-d933-11e9-934c-b17e2b18f37c.gif)
 
 Depending on your authentication method, your email address or name will appear in the top right of your dashboard
 instead of the **Sign in** button.
@@ -79,17 +79,15 @@ At this point, you've successfully added a single Netdata agent to your Netdata 
 
 Well, all you have to do is visit another node and repeat the sign-in process.
 
-![Animated GIF of registering another
-](https://user-images.githubusercontent.com/1153921/64826651-35fad900-d576-11e9-82ea-a072fae46fb0.jpg)
+Let's use a demo system as an example.
 
-### Example: Use a Netdata demo server 
-
-If you don't have multiple systems to associate with your Netdata Cloud account, you can test all these features out
-using a demo system.
-
-Visit the [Netdata website](https://www.netdata.cloud/#live-demo) and click on any of the gauge charts displayed beneath **Live Demo**.
+Visit the [Netdata website](https://www.netdata.cloud/#live-demo) and click on any of the gauge charts displayed underneath the **Live Demo** header.
 
 Once the dashboard loads, repeat the Netdata Cloud sign-in process. The demo server is now associated with your Netdata Cloud account, and will appear in your **My nodes** menu.
+
+Here's how the process looks in action:
+
+![output-Peek 2019-09-17 10-44 mp4](https://user-images.githubusercontent.com/1153921/65066115-9d2ed980-d938-11e9-83c5-8127886dbe11.gif)
 
 ## Navigate between your nodes via the My nodes menu
 
@@ -97,7 +95,7 @@ Once you have multiple nodes added to Netdata Cloud, they will populate your **M
 navigate between your systems quickly.
 
 ![Animated GIF of the My Nodes menu in
-action](https://user-images.githubusercontent.com/1153921/64389938-9aa7b800-cff9-11e9-9653-a77e791811ad.gif)
+action](https://user-images.githubusercontent.com/1153921/65066485-483f9300-d939-11e9-87d0-b4718cb8122a.gif)
 
 Whenever you pan, zoom, highlight, select, or pause a chart, Netdata will synchronize those settings with any other
 agent you visit via the My nodes menu. Even your scroll position is synchronized, so you'll see the same charts and
@@ -105,4 +103,39 @@ respective data for easy comparisons or root cause analysis.
 
 You can now seamlessly track performance anomalies across your entire infrastructure!
 
-## 
+## Try out the Nodes View
+
+Next, let's try out the Nodes View.
+
+Nodes View is a feature built in to Netdata Cloud that offers a different interface for viewing the health status of multiple nodes.
+
+> Learn more about all the features within Nodes View and what charts/metrics are represented there in our
+[documentation](../netdata-cloud/nodes-view.md).
+
+You can visit Nodes View by navigating to `https://netdata.cloud/console` in your browser. Or, you can click on the **Nodes View** button in any Netdata dashboard. If you're not logged in to Netdata Cloud yet, you'll be asked to log in first.
+
+![Animated GIF of loading the Nodes View](https://user-images.githubusercontent.com/1153921/65066750-d7e54180-d939-11e9-9415-a8556ed99a02.gif)
+
+The Nodes View shows an aggregated list of the nodes you connected to Netdata Cloud, and shows at-a-glance health status for each.
+
+Click on any of the boxes representing your nodes to see real-time, per-second charts of essential metrics in the **Node overview** sidebar.
+
+![output-Peek 2019-09-17 11-00 mp4](https://user-images.githubusercontent.com/1153921/65067327-192a2100-d93b-11e9-9824-80e142ac62c5.gif)
+
+You can also view raised alarms and see real-time metrics from a [select number of services/applications](../netdata-cloud/nodes-view/#services-available-in-the-nodes-view) using the various tabs available in the node overview sidebar.
+
+If you add a large number of nodes to the Nodes View, you may want to look into the different view and sorting options. You can choose between **full**, **compact**, and **detailed** view modes.
+
+![Animated GIF of the various view modes](https://user-images.githubusercontent.com/1153921/65068318-4bd51900-d93d-11e9-8720-b3bd76809d16.gif)
+
+You can also sort between grouping nodes by hostname, recently viewed, or most frequestly visited. Or, group them by alarm status, their services, or whether they're online or unreachable.
+
+![Animated GIF of the sorting and grouping options in Nodes View](https://user-images.githubusercontent.com/1153921/65068421-7b842100-d93d-11e9-8a9a-e2afb06a99f6.gif)
+
+Play around until you find the right settings for you and your infrastructure.
+
+## What's next?
+
+Now that you know how to add multiple nodes to your Netdata Cloud agent and navigate between them, it's time to learn more about how Netdata is configured. From there, you'll be able to customize your Netdata experience to your exact infrastructure and the information you need.
+
+[Next](part-04/)
