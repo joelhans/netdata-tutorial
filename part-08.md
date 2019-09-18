@@ -1,6 +1,10 @@
 # Build your first custom dashboard
 <!-- Goal: 	Given the popularity of the custom dashboards page, we need to help new users easily create new custom pages. This part will be more like a mini-tutorial on quickly setting up new users with a custom dashboard, rather than supplying all of the available options, as the custom dashboards page does. -->
 
+You have learned how several sections of Netdata dashboard worked. 
+
+This part of the tutorial 
+
 ## Create a custom-dashboard.html file
 
 ## Add dashboard.js
