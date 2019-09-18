@@ -26,6 +26,10 @@ local storage (except the refresh on focus / always option).
 
 You can see the **Performance**, **Synchronization**, **Visual**, and **Locale** tabs on the dashboard settings modal. 
 
+![Animated GIF of opening the settings modal](https://user-images.githubusercontent.com/12263278/64901553-967f3880-d692-11e9-95ac-dd485d36535c.gif)
+
+
+
 ### Performance
 
 This tab is a collection of options focused on the performance of the
@@ -60,7 +64,7 @@ You can also choose either to use browser local time or server time.
 However, note that these settings are applied gradually as charts are updated. 
 To force them, refresh the dashboard now. 
 
-![dash-settings](https://user-images.githubusercontent.com/12263278/64901553-967f3880-d692-11e9-95ac-dd485d36535c.gif)
+
 
 ## Check if there's an update to Netdata
 
@@ -69,7 +73,7 @@ comes with the auto-update option enabled by default.
 
 You can always check if there is an update available right from the **Update** area of your Netdata dashboard.
 
-![nedata-update](https://user-images.githubusercontent.com/12263278/64876743-be957a00-d647-11e9-83dd-2f0a8df572cb.gif)
+![Animated GIF of opening the update modal](https://user-images.githubusercontent.com/12263278/64876743-be957a00-d647-11e9-83dd-2f0a8df572cb.gif)
 
 You can see an update is available from the above short screen record.
 
@@ -78,44 +82,33 @@ However, it is best practice for you to first go over the [changelog](https://do
 
 ## Export or import a snapshot
 
-Snapshot files include all the information of the dashboard, including the URL of the origin server, 
-its netdata unique ID, and chart data queries for the visible timeframe,
-so align, pan and zoom the charts as needed. 
-Snapshots are not in real-time. 
+Netdata can export and import snapshots of the contents of your dashboard at a given time. Any Netdata agent can import the snapshot of any other Netdata agent. 
 
-Netdata can export and import dashboard snapshots. Any Netdata can import the snapshot of any other Netdata. 
+Snapshot files include all the information of the dashboard, including the URL of the origin server, its unique
+ID, and chart data queries for the visible timeframe, so align, pan and zoom the charts as needed. Snapshots are not in
+real-time.
 
-You download the snapshot to your computer as a file, 
-that can be imported back into any Netdata dashboard, 
-you do not need to import it back to the current server.
+To export a snapshot, click on the **export** icon.
 
-Snapshots don't upload to a server; instead, the web browser on your computer handles them.
+![Animated GIF of opening the export modal](https://user-images.githubusercontent.com/12263278/64901454-48b60080-d691-11e9-9c14-1539bc841735.gif)
 
-They are temporary because, on the reload of your browser, the actual Netdata dashboard replaces the snapshot.
+Edit the snapshot file name and select your desired compression method. Click on **Export**.
 
-### To export or save a snapshot
+When the export is complete, your browser will prompt you to save the `.snapshot` file to your machine. You can now share this file with any other Netdata user via email, Slack, or even to help describe your Netdata experience when [filing an issue](https://github.com/netdata/netdata/issues/new/choose) on GitHub.
 
- Click on the top upload icon as seen on the short clip below, edit the snapshot file name and 
- finally select your desired compression method and click `Export`.
+To import a snapshot, click on the **import** icon.
 
- ![export-shot](https://user-images.githubusercontent.com/12263278/64901454-48b60080-d691-11e9-9c14-1539bc841735.gif)
+![Animated GIF of opening the import modal](https://user-images.githubusercontent.com/12263278/64901503-ee696f80-d691-11e9-9678-8d0e2a162402.gif)
 
- You save the snapshot file after it gets generated on your browser and like a regular file attachment, 
- you can email it to your colleague.
+Select the Netdata snapshot file to import. Once the file is loaded, the dashboard will update with critical information about the snapshot and the system from which it was taken. Click **import** to render it.
 
- Congratulations, you have successfully exported a snapshot.
+Your Netdata dashboard will load data contained in the snapshot into charts. Because the snapshot only covers a certain
+period of time, it won't update with new metrics.
 
- #### To import or load a snapshot
+An imported snapshot is also temporary. If you reload your browser tab, Netdata will remove the snapshot data and
+restore your real-time dashboard for your machine.
 
- Click on the top download icon as seen on the short clip below. 
-
-![import-shot](https://user-images.githubusercontent.com/12263278/64901503-ee696f80-d691-11e9-9678-8d0e2a162402.gif)
-
- Select the Netdata snapshot file to import. 
-
- Once the file is loaded, click `import` to render it.
-
- ## Up Next
+ ## What's next?
 
 In this part of the Netdata tutorial, you learned how to:
 
