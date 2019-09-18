@@ -1,249 +1,90 @@
 # 06. Collecting metrics from your applications or services
 
-When Netdata **starts**, it auto-detects data sources, such as database servers, web servers, and more.
+When Netdata _starts_, it auto-detects dozens of **data sources**, such as database servers, web servers, and more.
 
-To auto-detect and collect metrics from a service or application you just installed, you need to [restart
+To auto-detect and collect metrics from a source you just installed, you need to [restart
 Netdata](../getting-started.md#start-stop-and-restart-netdata).
 
-However, auto-detection only works if you installed source service/application using its standard installation
-procedure. If Netdata isn't collecting metrics after a restart, your service/application probably isn't configured
+However, auto-detection only works if you installed the source using its standard installation
+procedure. If Netdata isn't collecting metrics after a restart, your source probably isn't configured
 correctly.
 
-To help explain how this process works, let's use an Nginx web server as an example.
+Check out the [available data collection modulues](../add-more-charts-to-netdata.md#available-data-collection-modules)
+to find the module for the source you want to monitor.
 
-## Enable the Nginx module
+## Example: Enabling the Nginx module
 
+To help explain how the auto-dectection process works, let's use an Nginx web server as an example. 
 
+Even if you don't have Nginx installed on your system, we recommend you read through the following section so you can apply the process to other data sources, such as Apache, Redis, Memcached, and more.
 
+The Nginx module, which helps Netdata collect metrics from a running Nginx web server, is part of the `python.d.plugin` external plugin _orchestrator_. We'll cover what external plugins and orchestrators are in the next section on [Netdata's plugin architecture](#netdatas-plugin-architecture).
 
+In order for Netdata to auto-detect an Nginx web server, you need to enable `ngx_http_stub_status_module` and pass the `stub_status` directive in the `location` block of your Nginx configuration file.
 
-
-## Add an external module
-
-You can not only use internal plugins and add external plugins but also add modules that can monitor services such as Apache, Nginx, MySQL, RabbitMQ and so on.
-This is achieved through plugin orchestrators.
-
-By default, `python.d.plugin`, a Netdata external plugin is an orchestrator for data collection modules written in Python.
-
-### Using the default `python.d.plugin`
-
-For this section of the tutorial, you will learn how to add the Nginx module written in Python to monitor one or more Nginx servers.
-
-As with some services, this module has to meet some requirements.
-
-- Nginx has to be configured with `ngx_http_stub_status_module`.
-
-  You can confirm if the module is already enabled or not by using following command:
-
-  ```sh
-  nginx -V 2>&1 | grep -o with-http_stub_status_module
-  ```
-
-- The directive `stub_status` passed in the `location` block of your Nginx configuration file like this:
-
-  ```conf
-  location /stub_status {
-      stub_status;
-  }
-  ```
-
-Netdata autodetects that the module is active, you can see the metrics on your dashboard.
-
-You can proceed to monitor as many services as you want by editing their service configuration file.
+You can confirm if the module is already enabled or not by using following command:
 
 ```sh
-/etc/netdata/edit-config python.d/[service].conf
+nginx -V 2>&1 | grep -o with-http_stub_status_module
 ```
 
-You can see the available modules for different services at the [official Netdata repository](https://github.com/netdata/netdata/tree/master/collectors/python.d.plugin).
+And your Nginx configuration file should have a `location` block similar to the following:
 
-To configure Netdata to monitor as many Nginx servers, you will edit the Nginx configuration file with the following command:
+```conf
+location /stub_status {
+    stub_status;
+}
+```
+
+Restart Netdata using `service netdata restart` or the [correct alternative](../getting-started.md#start-stop-and-restart-netdata) for your system, and Netdata will auto-detect metrics from the Nginx web server!
+
+While not necessary for most auto-detection and collection purposes, you can also configure the Nginx collection module
+itself by editing its configuration file:
 
 ```sh
 /etc/netdata/edit-config python.d/nginx.conf
 ```
 
-Be sure to have the `ngx_http_stub_status_module` active on any servers you want to monitor.
+After configuring any source, or changing the configration files for their respective modules, always
+restart Netdata.
 
-You can proceed to monitor as many Nginx servers as you need by editing the `python.d/nginx.conf` file:
+## Netdata's plugin architecture
 
-At the near bottom of the file you will see the below uncommented:
+Many Netdata users never have to configure plugins or worry about which plugin orchestrator they want to use.
 
-```yaml
-localhost:
-  name: "local"
-  url: "http://localhost/stub_status"
+But, if you want to configure plugins or write a collector module for your custom source, it's important to understand the underlying plugin architecture.
 
-localipv4:
-  name: "local"
-  url: "http://127.0.0.1/stub_status"
+By default, Netdata collects a lot of metrics every second. It uses **internal** plugins to collect system metrics, **external** plugins to collect non-system metrics, and **orchestrator** plugins to support data collection modules, such as the Nginx example mentioned earlier.
 
-localipv6:
-  name: "local"
-  url: "http://[::1]/stub_status"
-```
+Plugin orchestrators are external plugins that do not collect any data by themselves. Instead, they support data collection modules written in the language of the orchestrator. They communicate with the netdata daemon via pipes (stdout communication).
 
-You can add more
+Orchestrators also simplify the plugin development process and minimize the number of threads and processes running.
 
-```yaml
-RemoteNginx:
-  name: "Reverse_Proxy"
-  url: "http://yourdomain.com/stub_status"
-```
+To develop a collector module, you'll choose an orchestrator based on your preferred programming language. Netdata provides plugin orchestrators for [Bash](https://docs.netdata.cloud/collectors/charts.d.plugin/) (`charts.d`), [Python](https://docs.netdata.cloud/collectors/python.d.plugin/) (`python.d`), [Go](../../collectors/go.d.plugin/) (`go.d`), and [Node.js](../../collectors/node.d.plugin/) (`node.d`).
 
-`RemoteNginx` will show up in Netdata logs. `Reverse Proxy` will show up in the menu in the nginx section.
+## Enable and disable plugins
 
-This same procedure works when you want to view metrics of other services like Apache, Redis, Memcached and other services supported by the [`python.d` orchestrator](https://github.com/netdata/netdata/tree/master/collectors/python.d.plugin).
+You don't need to explicitly enable plugins to auto-detect properly configured sources, but it's useful to know how to
+enable or disable them.
 
-After making changes to the respective configuration file, always restart `netdata.service`.
+One reason you might want to _disable_ plugins is to improve Netdata's performance on low-resource systems, like
+ephemeral nodes or edge devices.
 
-<!-- ### Using `go.d.plugin`
-
-Netdata is in process of migrating collectors from `python` to `go`.
-
-The configuration at the moment are incompatible. As a temporary solution, all modules rewritten in go are disabled by default.
-
-Previously you enabled Nginx metrics on your Netdata dashboard through the `python.d.plugin` orchestrator, to achieve this with the `go.d.plugin` alternative, you have to do the following:
-
-- Explicitly disable python module in `python.d.conf`
-  run this command:
-
-```sh
-/etc/netdata/edit-config python.d.conf
-```
-
-Find the module of the service, Nginx is used as an example in this tutorial.
-
-You will see it commented and activated by default:
-
-```yaml
-# nginx: yes
-```
-
-Uncomment and disable it:
-
-```yaml
-nginx: no
-```
-
-- explicitly enable go module in `go.d.conf`
-
-run this command:
-
-```sh
-/etc/netdata/edit-config go.d.conf
-```
-
-You will see the module of the service, Nginx, for this tutorial, commented and activated by default.
-
-```yaml
-# nginx: yes
-```
-
-Uncomment that line so it looks like this:
-
-```yaml
-nginx: yes
-```
-
-- move `python` module jobs to `go` module configuration file (change syntax, see go module configuration file for details).
-
-* restart `netdata.service` -->
-
-
-
-
-
-
-Auto-detection
-  What if this thing isn’t collected?
-  Example: Nginx
-Enable or disable plugins
-  Save memory
-
-
-
-
-
-> There is one exception: When Netdata is running on the host (as in not in a container itself), it will always
-> auto-detect containers and VMs.
- If Netdata isn't collecting metrics after a restart, your service/application probably isn't configured
-correctly. Look at the [external plugin documentation](../collectors/plugins.d/) to find the appropriate module for your
-service/application. Those pages will contain more information about how to configure your service/application for
-auto-detection.
-
-Auto-detection is one of the built-in features that allow Netdata to detect and collect metrics of new or available services with zero configurations.
-
-For Netdata to collect metrics from any service after it is already installed, you have to ensure you meet the requirements of the specific service.
-
-After which you restart the `netdata.service`.
-
-
-
-Netdata collects system metrics by itself. It has many internal plugins for collecting most of the metrics presented by default when it starts, collecting data from `/proc`, `/sys` and other Linux kernel sources.
-
-To collect non-system metrics, Netdata supports a plugin architecture known as plugin orchestrator.
-
-Plugin orchestrators are external plugins that do not collect any data by themselves. Instead, they support data collection modules written in the language of the orchestrator.
-
-They also make it easier to develop plugins and minimize the number of threads and processes running.
-
-Currently, Netdata provides plugin orchestrators BASH v4+ charts.d.plugin, node.js node.d.plugin, python v2+ (including v3) python.d.plugin and two more are actively being developed (go and java)
-
-Netdata supports both **internal** and **external data collection** plugins
-
-## Internal plugins
-
-These plugins are written in C and run as threads inside the `netdata` daemon. Once this thread has started, the plugin may spawn additional threads according to its design.
-
-An example of this is the `cgroups.plugin`, written in C which collects resource usage of Containers, libvirt VMs and systemd services, on Linux systems.
-
-## External plugins
-
-External plugins may be written in just about any programming language and are spawned as long-running independent processes by the `netdata` daemon.
-
-They communicate with the netdata daemon via pipes (stdout communication).
-
-A good example is `fping.plugin`, written in C, which measures network latency, jitter, and packet loss between the monitored node and any number of remote network endpoints.
-
-## The difference between internal and external plugins?
-
-A significant difference between these two types of plugins is that external plugins depend on plugins.d - the Netdata internal plugin that collects metrics from external processes.
-
-## Auto-detection
-
-
-
-## Enable or disable internal plugins
-
-You can enable or disable plugins in the [plugin] section of `netdata.conf`.
-
-At this section, there is a list of all the plugins with a boolean setting (`yes` or `no` options) to enable or disable them.
-
-The exception is `statsd.plugin` that has its own [statsd] section.
-
-Once a plugin is enabled, consult the page of each plugin for additional configuration options.
-
-`plugins.d` manage all external plugins, which provides additional management options.
-
-## Add a new external plugin to Netdata
-
-Before you proceed to add a new external plugin to Netdata, you need to install the required libraries and packages from the package manager of your system.
-
-To install `nfacct.plugin` for example, you need to
-
-- install `libmnl-dev` and `libnetfilter_acct-dev` using the package manager of your system.
-
-- re-install Netdata from source. The installer will detect that the required libraries are now available and will also build netdata.plugin
-
-Some external plugins like `nfacct.plugin` require `root` access, so the plugins are `setuid` to `root`
-
-`nfacct.plugin` is installed and activated once the build from source is completed.
-
-You can disable NFACCT for Netdata by editting `/etc/netdata/netdata.conf` and adding this:
+You can enable or disable plugins in the [plugin] section of `netdata.conf`. This section features a list of all the
+plugins with a boolean setting (`yes` or `no`) to enable or disable them. Be sure to uncomment the line by removing the
+hash (`#`)!
 
 ```conf
 [plugins]
-    nfacct = no
+  # Enabled
+  node.d = yes
+  # Disabled
+  node.d = no
 ```
 
+## What's next?
+
+Now that you've learned the fundamentals behind configuring data sources for auto-detection, it's time to move back to
+the dashboard to learn more about some of its more advanced features.
+
+[Next](part-07/)
