@@ -1,3 +1,42 @@
-# Set up a proxy
+# Put Netdata behind a proxy
 
-t/k
+Welcome to the last part of the Netdata tutorial! We hope you've found it useful so far.
+
+In this last part, you'll set up an Nginx proxy to be a "middleman" between Netdata's dashboard and the rest of the internet. With this proxy, you'll be able to use HTTPS for more security for the data in transit between your node and your browser. Plus, Nginx will improve Netdata's overall performance.
+
+To run a proxy, you need a domain name and have [Nginx installed](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) on your system. Once you have those, it's time to configure Netdata and the proxy itself.
+
+## Configuring Netdata for TLS
+
+
+
+Try connecting to your Netdata dashboard again, now using HTTPS: `https://YOUR-HOST:19999`. Your connection is now secure! Time to configure Nginx to act as the middleman between your dashboard nd the internet.
+
+## Configuring Nginx
+
+Now that your agent 
+
+```conf
+upstream backend {
+    server 127.0.0.1:19999;
+    keepalive 64;
+}
+
+server {
+    listen 80;
+
+    server_name netdata.example.com;
+
+    location / {
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://backend;
+        proxy_http_version 1.1;
+        proxy_pass_request_headers on;
+        proxy_set_header Connection "keep-alive";
+        proxy_store off;
+    }
+}
+```
+
