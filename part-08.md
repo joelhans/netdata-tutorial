@@ -1,25 +1,38 @@
 # Build your first custom dashboard
 
-You have learned how several sections of Netdata dashboard worked. 
+In previous parts of the tutorial, you have learned how several sections of Netdata dashboard worked. 
 
-This part of the tutorial shows you how to easily create custom pages and set up your custom dashboard to fit your custom needs.
+This guide will show you how to easily create custom pages and set up a custom dashboard to fit your custom or specific needs.
 
-This feature of Netdata allows you create your own dashboard using simple HTML (for basic dashboards you may not have need for Javascript).
+## What you'll learn in this part
 
-You can make use of any available chart libraries on the same custom dashboard.
+In this part of the Netdata guide, you'll learn how to:
+
+-   create a custom-dashboard.html file
+-   Add dashboard.js
+-   Set the default Netdata server
+-   Create a chart, set its duration and size
+-   Set dimensions for your custom chart
+
+Let's get on with it!
+
+## Create a custom-dashboard.html file
+
+You can create your own dashboard using simple HTML, in some cases for basic dashboards you may not have need for Javascript.
+
+On the same custom dashboard, you can make use of any available chart libraries ([Chart.js](http://www.chartjs.org/), [D3.js](http://d3js.org/) and so on).
 
 You can also use data from one or any number of Netdata servers on the same dashboard as well as host your dashboard HTML page on any web server.
 
 You can also add Netdata charts to existing web pages.
 
-## Create a custom-dashboard.html file
+In your local Netdata installation (http://myhost:19999/dashboard.html), you can find a custom dashboard template which houses samples of all supported charts that can help you get a good idea of how to put together your custom dashboard.
 
-You should also look at the custom dashboard template, which contains samples of all supported charts. The code is here.
+On your local server, `/usr/share/netdata/web` is the default web root directory with the HTML and JS files.
 
-All of the mentioned examples are available on your local Netdata installation (e.g. http://myhost:19999/dashboard.html). The default web root directory with the HTML and JS code is /usr/share/netdata/web. The main dashboard is also in that directory and called index.html.\ Note: index.html has a different syntax. Don’t use it as a template for simple custom dashboards.
+It is worthy of note that the main dashboard is also in that directory and called `index.html`. The `index.html` has a different syntax and should not be used as a template for custom dashboards.
 
-Example empty dashboard¶
-If you need to create a new dashboard on an empty page, we suggest the following header:
+To create a new dashboard, add the following on an empty html file:
 
 ```html
 <!DOCTYPE html>
@@ -34,12 +47,12 @@ If you need to create a new dashboard on an empty page, we suggest the following
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <!-- here we will add dashboard.js -->
+  <!-- here you will add dashboard.js -->
 
 </head>
 <body>
 
-<!-- here we will add charts -->
+<!-- here you will add charts -->
 
 </body>
 </html>
@@ -47,43 +60,46 @@ If you need to create a new dashboard on an empty page, we suggest the following
 
 ## Add dashboard.js
 
-To add Netdata charts to any web page (dedicated to Netdata or not), you need to include the /dashboard.js file of a Netdata server.
+You need to include the `dashboard,js` file of a Netdata server in order add Netdata charts to any web page. 
 
-For example, if your Netdata server listens at http://box:19999/, you will need to add the following to the head section of your web page:
+For example, if your Netdata server listens at `http://LOCAL_IP:19999/`, you will need to add the following to the head section of your web page:
 
 ```js
-<script type="text/javascript" src="http://box:19999/dashboard.js"></script>
+<script type="text/javascript" src="http://LOCAL_IP:19999/dashboard.js"></script>
 ```
 
-What does dashboard.js do?
+### What does `dashboard.js` do?
 
-  dashboard.js will automatically load the following:
+  `dashboard.js` automatically loads the following:
 
--   dashboard.css, required for the Netdata charts
+-   `dashboard.css`, required for the Netdata charts
 
--   jquery.min.js, (only if jQuery is not already loaded for this web page)
+-   `jquery.min.js`, (only if jQuery is not already loaded for this web page)
 
--   bootstrap.min.js (only if Bootstrap is not already loaded) and bootstrap.min.css.
+-   `bootstrap.min.js` (only if Bootstrap is not already loaded) and bootstrap.min.css.
 
     You can disable this by adding the following before loading dashboard.js:
 
     ```js
     <script>var netdataNoBootstrap = true;</script>
     ```
--   jquery.nanoscroller.min.js, required for the scrollbar of the chart legends.
+-   `jquery.nanoscroller.min.js`, required for the scrollbar of the chart legends.
 
--   bootstrap-toggle.min.js and bootstrap-toggle.min.css, required for the settings toggle buttons.
+-   `bootstrap-toggle.min.js` and `bootstrap-toggle.min.css`, required for the settings toggle buttons.
 
--   font-awesome.min.css, for icons.
+-   `font-awesome.min.css`, for icons.
 
+When `dashboard.js` loads, it scans the page for elements that define charts and immediately start refreshing them.
 
-When dashboard.js loads will scan the page for elements that define charts (see below) and immediately start refreshing them. Keep in mind more javascript modules may be loaded (every chart library is a different javascript file, that is loaded on first use).
+Keep in mind more javascript modules may be loaded (every chart library is a different javascript file, that is loaded on first use).
 
 ## Set the default Netdata server
 
-`dashboard.js` will attempt to auto-detect the URL of the Netdata server it is loaded from, and set this server as the default Netdata server for all charts.
+`dashboard.js` will attempt to auto-detect the URL of the Netdata server it is loaded from, 
+and set this server as the default Netdata server for all charts.
 
-If you need to set any other URL as the default Netdata server for all charts that do not specify a Netdata server, add this before loading `dashboard.js`:
+If you need to set any other URL as the default Netdata server for all charts that do not specify a Netdata server, 
+add this before loading `dashboard.js`:
 
 ```js
 <script type="text/javascript">var netdataServer = "http://your.netdata.server:19999";</script>
@@ -91,11 +107,12 @@ If you need to set any other URL as the default Netdata server for all charts th
 
 ## Create a chart, set its duration and size
 
-A chart is an individual, interactive, always-updating graphic displaying one or more collected/calculated metrics. Charts are generated by collectors.
+A chart is an individual, interactive, always-updating graphic displaying one or more collected/calculated metrics. 
+Charts are generated by collectors.
 
 Netdata displays a chart’s name in parentheses above the chart.
 
-To add charts, you need to add a div for each of them. Each of these div elements accept a few data- attributes:
+To add charts, you need to add a `div` for each of them. Each of these `div` elements accept a few `data-` attributes:
 
 ### The chart unique ID
 
@@ -109,8 +126,11 @@ To specify the unique id, use this:
 
 The above is enough for adding a chart. It most probably have the wrong visual settings though. Keep reading…
 
-The duration of the chart¶
-You can specify the duration of the chart (how much time of data it will show) using:
+### The duration of the chart
+
+The duration of the chart is how much time of data it will show. 
+
+You can specify it using:
 
 ```html
 <div data-netdata="unique.id"
@@ -118,7 +138,7 @@ You can specify the duration of the chart (how much time of data it will show) u
  data-before="BEFORE_SECONDS"
  ></div>
  ```
-AFTER_SECONDS and BEFORE_SECONDS are numbers representing a time-frame in seconds.
+`AFTER_SECONDS` and `BEFORE_SECONDS` are numbers representing a time-frame in seconds.
 
 The can be either:
 
@@ -137,7 +157,7 @@ You can set the size of the chart using this:
  ></div>
 ```
 
-WIDTH and HEIGHT can be anything CSS accepts for width and height (e.g. percentages, pixels, etc). Keep in mind that for certain chart libraries, dashboard.js may apply an aspect ratio to these.
+`WIDTH` and `HEIGHT` can be anything CSS accepts for width and height (e.g. percentages, pixels, etc). Keep in mind that for certain chart libraries, dashboard.js may apply an aspect ratio to these.
 
 If you want dashboard.js to permanently remember (browser local storage) the dimensions of the chart (the user may resize it), you can add: data-id=" SETTINGS_ID", where SETTINGS_ID is anything that will be common for this chart across user sessions.
 
