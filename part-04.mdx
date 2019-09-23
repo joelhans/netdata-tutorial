@@ -21,24 +21,87 @@ We'll talk about Netdata's default configuration, and then you'll learn how to d
 
 Netdata primarily uses the `netdata.conf` file for custom configurations.
 
-On most systems, you can find that file inside the `/etc/netdata/` directory. We'll call that the **Netdata directory**.
+On most systems, you can find that file inside the `/etc/netdata/` directory. Some operating systems will place
+configuration files in the `/opt/netdata/etc/netdata/` directory instead. Be sure to check there if you find nothing at
+`/etc/netdata/`.
 
-> Some operating systems will place configuration files in the `/opt/netdata/etc/netdata/` directory instead. Be sure to
-> check there if you find nothing at `/etc/netdata/`.
+You can also look at our [installation instructions](../../packaging/installer/) for details on where your configuration
+files might be located.
+
+For the rest of this tutorial, we'll assume you're editing files or running scripts from _within_ your **Netdata
+directory**.
 
 ## Use edit-config to make changes to `netdata.conf`
 
 Inside your Netdata directory there is a helper scripted called `edit-config`. This script will open existing Netdata
-configuration files using a text edito
+configuration files using a text editor. Or, if the configuration file doesn't yet exist, the script will copy an
+example file from `/usr/lib/netdata/conf.d/` to your Netdata directory and then allow you to edit it before saving.
 
-Use a text editor, like `nano` or `vim`, to open your `netdata.conf` file.
+> `edit-config` will use the `EDITOR` environment variable on your system to edit the file. On many systems, that is
+> defaulted to `vim` or `nano`. We highly recommend `nano` for beginning users. To change this variable for the current
+> session (it will be reset when you reboot), export a new value: `export EDITOR=nano`.
 
-The `netdata.conf` file is broken up into various sections, such as `[global]`, `[web]`, and `[registry]`. 
+Let's give it a shot. Navigate to your Netdata directory and run `edit-config` using `sudo` to edit `netdata.conf`:
 
+```bash
+cd /etc/netdata    # Replace this path with your Netdata directory
+sudo ./edit-config netdata.conf
+```
 
+You'll see that `netdata.conf` is a `name = value` dictionary. Most lines are **commented**, in that they start with a
+hash symbol (`#`) and thus are ignored by Netdata when it loads the configuration file. Netdata will add a comment to
+any settings it doesn't recognize or isn't using.
 
-By default, most options are commented, so you'll have to uncomment them (remove the `#`) for Netdata to recognize your
-change.
+This means that to _enable_ any setting, you need to **uncomment** it by removing that hash.
 
-Once you save your changes, [restart Netdata](../getting-started.md#start-stop-and-restart-netdata) to load your new configuration.
+Let's add a fake option to show you how Netdata loads its configuration. Add a `test` option under the `[global]`
+section and give it the value of `1`.
 
+```conf
+[global]
+    test = 1
+```
+
+Restart Netdata with `service restart netdata` or the [appropriate alternative](../getting-started.md) for your system.
+
+Now, open up your browser and navigate to `http://HOST-IP:19999/netdata.conf`. You'll see that Netdata has recognized
+that our fake option isn't valid and added a notice that it will be ignored.
+
+Here's the process in GIF form!
+
+![Animated GIF of creating a fake option in
+netdata.conf](https://user-images.githubusercontent.com/1153921/65470254-4422e200-de1f-11e9-9597-a97c89ee59b8.gif)
+
+## Example: Rename your Netdata agent
+
+The `netdata.conf` file is broken up into various sections, such as `[global]`, `[web]`, and `[registry]`. Each section
+contains a number of options that you can configure.
+
+Let's start with an easy one: switching the `hostname` option, thereby "renaming" your Netdata agent on the dashboard
+and a handful of other places, like the **My nodes** menu.
+
+Use `edit-config` to change the `hostname` option to your preferred name. Be sure to uncomment it!
+
+```conf
+[global]
+    hostname = hello-world
+```
+
+Once you're done, restart Netdata and refresh the dashboard. Say hello to your renamed agent!
+
+![Animated GIF of editing the hostname option in
+netdata.conf](https://user-images.githubusercontent.com/1153921/65470784-86e5b980-de21-11e9-87bf-fabec7989738.gif)
+
+## What's next?
+
+At this point, you should be comfortable with getting to your Netdata directory, opening and editing `netdata.conf`, and
+seeing your changes reflected in the dashboard.
+
+Netdata has many more configuration files that you might want to change, but we'll cover those in the following parts of
+this tutorial.
+
+In the next part, we're going to cover one of Netdata's core functions: monitoring the health of your systems via alarms
+and notifications. You'll learn how to disable alarms, create new ones, and push notifications to the system of your
+choosing.
+
+[Next](part-05/)
