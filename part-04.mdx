@@ -1,3 +1,44 @@
 # The basics of configuring Netdata
 
-t/k
+Welcome to the fourth part of the Netdata tutorial.
+
+Since the beginning, we've covered the building blocks of Netdata, dashboard basics, and how you can monitor many
+individual systems using many distributed Netdata agents.
+
+Next up: configuration.
+
+## What you'll learn in this part
+
+We'll talk about Netdata's default configuration, and then you'll learn how to do the following:
+
+-   Find your `netdata.conf` file
+-   Use edit-config to make changes to `netdata.conf`
+-   Store more metrics using the database engine
+-   Disable an alarm
+-   Enable TLS for improved security
+
+## Find your `netdata.conf` file
+
+Netdata primarily uses the `netdata.conf` file for custom configurations.
+
+On most systems, you can find that file inside the `/etc/netdata/` directory. We'll call that the **Netdata directory**.
+
+> Some operating systems will place configuration files in the `/opt/netdata/etc/netdata/` directory instead. Be sure to
+> check there if you find nothing at `/etc/netdata/`.
+
+## Use edit-config to make changes to `netdata.conf`
+
+Inside your Netdata directory there is a helper scripted called `edit-config`. This script will open existing Netdata
+configuration files using a text edito
+
+Use a text editor, like `nano` or `vim`, to open your `netdata.conf` file.
+
+The `netdata.conf` file is broken up into various sections, such as `[global]`, `[web]`, and `[registry]`. 
+
+
+
+By default, most options are commented, so you'll have to uncomment them (remove the `#`) for Netdata to recognize your
+change.
+
+Once you save your changes, [restart Netdata](../getting-started.md#start-stop-and-restart-netdata) to load your new configuration.
+
