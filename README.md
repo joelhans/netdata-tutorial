@@ -1,1 +1,45 @@
 # netdata-tutorial
+- Part 0: **Introduction**
+  - [x] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 1: **Netdata's building blocks**
+  - [ ] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 2: **Get to know Netdata's dashboard**
+  - [x] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 3: **Monitor more than one system with Netdata**
+  - [x] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 4: **The basics of configuring Netdata**
+  - [ ] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 5: **Health monitoring alarms and notifications**
+  - [ ] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 6: **Collecting metrics from your applications or services**
+  - [x] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 7: **Netdata's dashboard in depth**
+  - [x] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 8: **Building your first custom dashboard**
+  - [ ] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 9: **Long-term metrics storage**
+  - [x] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
+- Part 10: **Put Netdata behind a proxy**
+  - [ ] Draft completed
+  - [ ] Grammarly check completed
+  - [ ] Copy-edit completed
