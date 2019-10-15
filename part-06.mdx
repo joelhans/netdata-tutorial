@@ -9,7 +9,7 @@ However, auto-detection only works if you installed the source using its standar
 procedure. If Netdata isn't collecting metrics after a restart, your source probably isn't configured
 correctly.
 
-Check out the [available data collection modulues](../add-more-charts-to-netdata.md#available-data-collection-modules)
+Check out the [available data collection modulues](/docs/add-more-charts-to-netdata/#available-data-collection-modules)
 to find the module for the source you want to monitor.
 
 ## Example: Enabling the Nginx module
@@ -36,7 +36,7 @@ location /stub_status {
 }
 ```
 
-Restart Netdata using `service netdata restart` or the [correct alternative](../getting-started.md#start-stop-and-restart-netdata) for your system, and Netdata will auto-detect metrics from the Nginx web server!
+Restart Netdata using `service netdata restart` or the [correct alternative](/docs/getting-started/start-stop-and-restart-netdata) for your system, and Netdata will auto-detect metrics from the Nginx web server!
 
 While not necessary for most auto-detection and collection purposes, you can also configure the Nginx collection module
 itself by editing its configuration file:
@@ -60,7 +60,7 @@ Plugin orchestrators are external plugins that do not collect any data by themse
 
 Orchestrators also simplify the plugin development process and minimize the number of threads and processes running.
 
-To develop a collector module, you'll choose an orchestrator based on your preferred programming language. Netdata provides plugin orchestrators for [Bash](https://docs.netdata.cloud/collectors/charts.d.plugin/) (`charts.d`), [Python](https://docs.netdata.cloud/collectors/python.d.plugin/) (`python.d`), [Go](../../collectors/go.d.plugin/) (`go.d`), and [Node.js](../../collectors/node.d.plugin/) (`node.d`).
+To develop a collector module, you'll choose an orchestrator based on your preferred programming language. Netdata provides plugin orchestrators for [Bash](/docs/collectors/charts.d.plugin/) (`charts.d`), [Python](/docs/collectors/python.d.plugin/) (`python.d`), [Go](/docs/collectors/go.d.plugin/) (`go.d`), and [Node.js](/docs/collectors/node.d.plugin/) (`node.d`).
 
 ## Enable and disable plugins
 
@@ -87,4 +87,4 @@ hash (`#`)!
 Now that you've learned the fundamentals behind configuring data sources for auto-detection, it's time to move back to
 the dashboard to learn more about some of its more advanced features.
 
-[Next](part-07/)
+[Next](/tutorials/part-07/)
